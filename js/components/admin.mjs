@@ -1,17 +1,15 @@
-import { qs } from '../utils.js';
+import { qs } from '../utils.mjs';
 
 export function renderAdmin(el, scenarios) {
   el.innerHTML = `
-    <section class="card">
-      <h1>Saved Scenarios</h1>
-      <table id="adminTable">
-        <thead>
-          <tr><th>City</th><th>Price</th><th>PITI</th><th>DSCR</th></tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-      <button id="export">Export CSV</button>
-    </section>
+    <h1>Saved Scenarios</h1>
+    <table id="adminTable">
+      <thead>
+        <tr><th>City</th><th>Price</th><th>PITI</th><th>DSCR</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <button id="export">Export CSV</button>
   `;
   const tbody = qs('#adminTable tbody', el);
   scenarios.forEach(s => {
