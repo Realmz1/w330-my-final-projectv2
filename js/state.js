@@ -1,4 +1,4 @@
-import { storage } from './utils.js';
+import { storage } from './utils.mjs';
 
 const defaultState = {
   scenarios: storage.get('scenarios') || [],
