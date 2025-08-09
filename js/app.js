@@ -1,10 +1,14 @@
-@@ -6,51 +6,51 @@ import { drawSparkline } from './components/rateSparkline.mjs';
-import { getStaticMap } from './api/mapbox.mjs';
-import { generateActionPlan } from './components/actionPlan.mjs';
-import { renderScenarioCard } from './components/scenarioCard.mjs';
-import { renderInvestorToggle } from './components/investor.mjs';
-import { renderAdmin } from './components/admin.mjs';
-import { qs } from './utils.mjs';
+import { state, saveScenario } from './state.js';
+import { renderQuiz } from './components/quiz.js';
+import { estimate, calcDSCR } from './components/estimator.js';
+import { getMortgageRates } from './api/fred.js';
+import { drawSparkline } from './components/rateSparkline.js';
+import { getStaticMap } from './api/mapbox.js';
+import { generateActionPlan } from './components/actionPlan.js';
+import { renderScenarioCard } from './components/scenarioCard.js';
+import { renderInvestorToggle } from './components/investor.js';
+import { renderAdmin } from './components/admin.js';
+import { qs } from './utils.js';
 
 const app = document.getElementById('app');
 
@@ -24,7 +28,6 @@ async function handleQuizSubmit(quiz) {
   const plan = generateActionPlan(quiz);
   const dscr = state.investor && quiz.rentIncome ? calcDSCR(Number(quiz.rentIncome), est.piti) : null;
   app.innerHTML = `
-    <section id="est-result">
     <section id="est-result" class="card">
       <h2>Estimated Buying Power</h2>
       <div>Price: $${Math.round(price).toLocaleString()}</div>
@@ -51,3 +54,29 @@ async function handleQuizSubmit(quiz) {
 
 function renderQuizView() {
   renderQuiz(app, handleQuizSubmit, state.investor);
+}
+
+function renderAdminView() {
+  renderAdmin(app, state.scenarios);
+}
+
+function renderView() {
+  const params = new URLSearchParams(location.search);
+  const view = params.get('view');
+  if (view === 'admin') {
+    renderAdminView();
+  } else {
+    renderQuizView();
+  }
+}
+
+renderView();
+
+const footer = document.createElement('footer');
+const toggleWrap = document.createElement('div');
+renderInvestorToggle(toggleWrap, state, () => renderView());
+footer.appendChild(toggleWrap);
+const nav = document.createElement('nav');
+nav.innerHTML = '<a href="?">Home</a> | <a href="?view=admin">Admin</a>';
+footer.appendChild(nav);
+document.body.appendChild(footer);
