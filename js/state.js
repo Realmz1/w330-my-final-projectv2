@@ -1,4 +1,4 @@
-import { storage } from './utils.mjs';
+import { storage } from './utils.js';
 
 const defaultState = {
   scenarios: storage.get('scenarios') || [],
@@ -17,4 +17,3 @@ export const setInvestor = val => {
   state.investor = val;
   storage.set('investor', val);
 };
-
