@@ -1,14 +1,14 @@
-import { state, saveScenario } from './state.js';
-import { renderQuiz } from './components/quiz.js';
-import { estimate, calcDSCR } from './components/estimator.js';
-import { getMortgageRates } from './api/fred.js';
-import { drawSparkline } from './components/rateSparkline.js';
-import { getStaticMap } from './api/mapbox.js';
-import { generateActionPlan } from './components/actionPlan.js';
-import { renderScenarioCard } from './components/scenarioCard.js';
-import { renderInvestorToggle } from './components/investor.js';
-import { renderAdmin } from './components/admin.js';
-import { qs } from './utils.js';
+import { state, saveScenario } from './state.mjs';
+import { renderQuiz } from './components/quiz.mjs';
+import { estimate, calcDSCR } from './components/estimator.mjs';
+import { getMortgageRates } from './api/fred.mjs';
+import { drawSparkline } from './components/rateSparkline.mjs';
+import { getStaticMap } from './api/mapbox.mjs';
+import { generateActionPlan } from './components/actionPlan.mjs';
+import { renderScenarioCard } from './components/scenarioCard.mjs';
+import { renderInvestorToggle } from './components/investor.mjs';
+import { renderAdmin } from './components/admin.mjs';
+import { qs } from './utils.mjs';
 
 const app = document.getElementById('app');
 
@@ -28,7 +28,7 @@ async function handleQuizSubmit(quiz) {
   const plan = generateActionPlan(quiz);
   const dscr = state.investor && quiz.rentIncome ? calcDSCR(Number(quiz.rentIncome), est.piti) : null;
   app.innerHTML = `
-    <section id="est-result" class="card">
+    <section id="est-result">
       <h2>Estimated Buying Power</h2>
       <div>Price: $${Math.round(price).toLocaleString()}</div>
       <div>Monthly PITI: $${est.piti.toLocaleString()}</div>
