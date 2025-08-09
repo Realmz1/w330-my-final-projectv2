@@ -1,10 +1,9 @@
-import { qs, getFormData } from '../utils.js';
+import { qs, getFormData } from '../utils.mjs';
 
 export function renderQuiz(el, onSubmit, investor = false) {
   el.innerHTML = `
-    <section class="card">
-      <h1>Get Your Buying Power</h1>
-      <form id="quiz">
+    <h1>Get Your Buying Power</h1>
+    <form id="quiz">
       <label>Annual Income
         <input type="number" name="income" required min="0" />
       </label>
@@ -36,8 +35,7 @@ export function renderQuiz(el, onSubmit, investor = false) {
         <input type="text" name="city" required />
       </label>
       <button type="submit">See Estimate</button>
-      </form>
-    </section>`;
+    </form>`;
   const form = qs('#quiz', el);
   form.addEventListener('submit', e => {
     e.preventDefault();
