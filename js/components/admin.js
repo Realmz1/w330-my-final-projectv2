@@ -1,15 +1,7 @@
-import { qs } from '../utils.mjs';
+import { qs } from '../utils.js';
 
 export function renderAdmin(el, scenarios) {
   el.innerHTML = `
-    <h1>Saved Scenarios</h1>
-    <table id="adminTable">
-      <thead>
-        <tr><th>City</th><th>Price</th><th>PITI</th><th>DSCR</th></tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-    <button id="export">Export CSV</button>
     <section class="card">
       <h1>Saved Scenarios</h1>
       <table id="adminTable">
