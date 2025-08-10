@@ -1,4 +1,3 @@
-import { state, saveScenario } from './state.mjs';
 import { renderQuiz } from './components/quiz.mjs';
 import { estimate, calcDSCR } from './components/estimator.mjs';
 import { getMortgageRates } from './api/fred.mjs';
@@ -8,6 +7,7 @@ import { generateActionPlan } from './components/actionPlan.mjs';
 import { renderScenarioCard } from './components/scenarioCard.mjs';
 import { renderInvestorToggle } from './components/investor.mjs';
 import { renderAdmin } from './components/admin.mjs';
+import { state, saveScenario } from './state.mjs';
 import { qs } from './utils.mjs';
 
 const app = document.getElementById('app');
@@ -28,7 +28,7 @@ async function handleQuizSubmit(quiz) {
   const plan = generateActionPlan(quiz);
   const dscr = state.investor && quiz.rentIncome ? calcDSCR(Number(quiz.rentIncome), est.piti) : null;
   app.innerHTML = `
-    <section id="est-result">
+    <section id="est-result" class="card">
       <h2>Estimated Buying Power</h2>
       <div>Price: $${Math.round(price).toLocaleString()}</div>
       <div>Monthly PITI: $${est.piti.toLocaleString()}</div>
@@ -53,6 +53,7 @@ async function handleQuizSubmit(quiz) {
 }
 
 function renderQuizView() {
+  app.innerHTML = '';
   renderQuiz(app, handleQuizSubmit, state.investor);
 }
 
@@ -60,9 +61,15 @@ function renderAdminView() {
   renderAdmin(app, state.scenarios);
 }
 
-function renderView() {
+function init() {
   const params = new URLSearchParams(location.search);
   const view = params.get('view');
+
+  const toggleContainer = document.createElement('div');
+  toggleContainer.className = 'card';
+  document.body.prepend(toggleContainer);
+  renderInvestorToggle(toggleContainer, state, renderQuizView);
+
   if (view === 'admin') {
     renderAdminView();
   } else {
@@ -70,13 +77,4 @@ function renderView() {
   }
 }
 
-renderView();
-
-const footer = document.createElement('footer');
-const toggleWrap = document.createElement('div');
-renderInvestorToggle(toggleWrap, state, () => renderView());
-footer.appendChild(toggleWrap);
-const nav = document.createElement('nav');
-nav.innerHTML = '<a href="?">Home</a> | <a href="?view=admin">Admin</a>';
-footer.appendChild(nav);
-document.body.appendChild(footer);
+init();
