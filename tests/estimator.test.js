@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { calcMonthlyPayment, calcDSCR } from '../js/components/estimator.js';
+import { calcMonthlyPayment, calcDSCR } from '../js/components/estimator.mjs';
 
 test('calcMonthlyPayment computes correct payment', () => {
   const payment = calcMonthlyPayment(300000, 6, 30);
