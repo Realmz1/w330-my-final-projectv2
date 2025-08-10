@@ -2,14 +2,16 @@ import { qs } from '../utils.mjs';
 
 export function renderAdmin(el, scenarios) {
   el.innerHTML = `
-    <h1>Saved Scenarios</h1>
-    <table id="adminTable">
-      <thead>
-        <tr><th>City</th><th>Price</th><th>PITI</th><th>DSCR</th></tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-    <button id="export">Export CSV</button>
+    <section class="card">
+      <h1>Saved Scenarios</h1>
+      <table id="adminTable">
+        <thead>
+          <tr><th>City</th><th>Price</th><th>PITI</th><th>DSCR</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <button id="export">Export CSV</button>
+    </section>
   `;
   const tbody = qs('#adminTable tbody', el);
   scenarios.forEach(s => {
