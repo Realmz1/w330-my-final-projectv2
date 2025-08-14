@@ -1,6 +1,6 @@
 import { qs, getFormData } from '../utils.mjs';
 
-export function renderQuiz(el, onSubmit, investor = false) {
+export function renderQuiz(el, onSubmit, investor = false, initial = {}) {
   el.innerHTML = `
     <section class="card">
       <h1>Get Your Buying Power</h1>
@@ -39,6 +39,9 @@ export function renderQuiz(el, onSubmit, investor = false) {
       </form>
     </section>`;
   const form = qs('#quiz', el);
+  Object.entries(initial).forEach(([key, val]) => {
+    if (form[key]) form[key].value = val;
+  });
   form.addEventListener('submit', e => {
     e.preventDefault();
     const data = getFormData(form);
