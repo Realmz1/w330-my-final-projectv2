@@ -45,7 +45,6 @@ async function handleQuizSubmit(quiz) {
     </section>`;
   renderRateContext(document.getElementById('rateContextPanel'), rateData);
   renderRateContext(qs('#rateContext', result), rateData);
-  drawSparkline(qs('#sparkline', result), rateData);
   if (mapUrl)
     qs('#map', result).innerHTML = `<img src="${mapUrl}" alt="map of ${quiz.city}" />`;
   qs('#saveScenario', result).addEventListener('click', () => {
